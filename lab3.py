@@ -7,33 +7,33 @@
 import random
 
 
-def print_matrix(matrix):
-  for row in matrix:
-    for elem in row:
-      print('{:4}'.format(elem), end=' ')
-    print()
+def print_matrix(mat):
+    for row in mat:
+        for elem in row:
+          print('{:4}'.format(elem), end=' ')
+        print()
 
 
-def paste_matrix(matrix_F, matrix, column_index, row_index):
-  a = column_index
-  for row in matrix:
-    for element in row:
-      matrix_F[row_index][column_index] = element
-      column_index += 1
-    row_index += 1
-    column_index = a
+def pastemat(matF, matrix, column_index, row_index):
+    a = column_index
+    for row in matrix:
+      for element in row:
+        matF[row_index][column_index] = element
+        column_index += 1
+      row_index += 1
+      column_index = a
 
 
-def matrix_zero(size):
-        return [[0 for i in range(size)] for j in range(size)]
+def matzero(size):
+    return [[0 for i in range(size)] for j in range(size)]
 
 
-def matrix_input(matrix, i1, i2, j1, j2):
-    zero_matrix = matrix_zero(len(matrix)//2)
+def matrix_input(mat, i1, i2, j1, j2):
+    zero_mat = matzero(len(mat)//2)
     for i in range(i1, i2):
         for j in range(j1, j2):
-            zero_matrix[i - i1][j - j1] = matrix[i][j]
-    return zero_matrix
+            zero_mat[i - i1][j - j1] = mat[i][j]
+    return zero_mat
 
 
 try:
@@ -105,31 +105,31 @@ else:
     print('Сумма чисел, по периметру области 3 оказалась меньше чем произведение чисел по периметру области 2')
     matrix_E, matrix_B = matB, matE
 
-matrix_F = matA.copy()
-paste_matrix(matrix_F, matE, 0, 0)
-paste_matrix(matrix_F, matB, fix_n, 0)
-paste_matrix(matrix_F, matC, fix_n, fix_n)
-paste_matrix(matrix_F, matD, 0, fix_n)
+matF = matA.copy()
+pastemat(matF, matE, 0, 0)
+pastemat(matF, matB, fix_n, 0)
+pastemat(matF, matC, fix_n, fix_n)
+pastemat(matF, matD, 0, fix_n)
 
 print('Матрица F:')
-print_matrix(matrix_F)
+print_matrix(matF)
 
-matrix_F_transp = matrix_zero(n)
+matFt = matzero(n)
 
 print("Матрица F транспонированая:")
 for i in range(n):
     for j in range(n):
-        matrix_F_transp[i][j] = matrix_F[j][i]
-print_matrix(matrix_F_transp)
+        matFt[i][j] = matF[j][i]
+print_matrix(matFt)
 
 print('Вычисляем A * F + K * F T:')
 
-matAF = matrix_zero(n)
-matTF = matrix_F_transp.copy()
+matAF = matzero(n)
+matTF = matFt.copy()
 for i in range(n):
     for j in range(n):
         for k in range(n):
-            matAF[i][j] += matA[i][k] * matrix_F[k][j]
+            matAF[i][j] += matA[i][k] * matF[k][j]
 print('Результат A * F:')
 print_matrix(matAF)
 
@@ -139,9 +139,9 @@ for i in range(n):
 
 print('Результат K * F:')
 print_matrix(matTF)
-matrix_res = matrix_zero(n)
+matres = matzero(n)
 for i in range(n):
     for j in range(n):
-        matrix_res[i][j] = matAF[i][j] + matTF[i][j]
+        matres[i][j] = matAF[i][j] + matTF[i][j]
 print('Результат:')
-print_matrix(matrix_res)
+print_matrix(matres)
